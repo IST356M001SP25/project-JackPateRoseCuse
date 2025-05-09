@@ -31,7 +31,7 @@ team_stats_df.to_csv('team_stats_2025.csv', index=False)
 
 st.title("MLB Team Statistics 2025")
 
-# Load the dataset
+# Load the dataset to the repository, so that you can use it with other codes if you wanted to later
 team_stats_df = pd.read_csv('team_stats_2025.csv')
 
 # Streamlit app
@@ -56,20 +56,24 @@ if x_axis and y_axis:
     plt.legend(title='Team', bbox_to_anchor=(1.05, 1), loc='upper left')
     st.pyplot(plt)
 
-print(columns)
+print(columns) # print all the columns in the dataset
+
+
 
 # Display the correlation between the selected column and win%
 st.title("Correlation to Win%")
+columns_2 = columns # Creating a new ID for the columns list to avoid confusion with the previous one
 
 # Dropdown for selecting the x-axis column 
-x_axis2 = st.selectbox("Select X-axis column:", columns)
+x_axis2 = st.selectbox("Select X-axis column:", columns_2, index=1)  # Default to the second column
 
+#Creating the scatterplot that allows the user to select the x-axis column, along with finding their correlation to win%
 if x_axis2:
-    st.write(f"Correlation: {x_axis2} vs W%")
-    plt.figure(figsize=(10, 6))
+    st.write(f"Correlation: {x_axis2} vs W%") # Title of the graph
+    plt.figure(figsize=(10, 6)) # Size of the graph
     correlation_plot = sns.scatterplot(
-        data=team_stats_df,
-        x=x_axis2,
+        data=team_stats_df, # DataFrame containing the team statistics
+        x=x_axis2, # X axis column selected by the user
         y='W-L%',  # Correlate with Win%
         hue='Tm',  # Color by team
         palette='Set1',  # Use a color palette
